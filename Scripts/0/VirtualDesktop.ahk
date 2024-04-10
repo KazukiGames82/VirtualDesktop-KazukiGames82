@@ -1,5 +1,6 @@
 #SingleInstance, force
 #NoTrayIcon
+SetWinDelay, 0
 SetWorkingDir %A_ScriptDir%
 
 hVirtualDesktopAccessor := DllCall("LoadLibrary", "Str", A_ScriptDir . "\VirtualDesktopAccessor.dll", "Ptr")
