@@ -5,8 +5,6 @@ SetWorkingDir %A_ScriptDir%
 hVirtualDesktopAccessor := DllCall("LoadLibrary", "Str", A_ScriptDir . "\VirtualDesktopAccessor.dll", "Ptr")
 
 GoToDesktopNumberProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "GoToDesktopNumber", "Ptr")
-CreateDesktopProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "CreateDesktop", "Ptr")
-RemoveDesktopProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "RemoveDesktop", "Ptr")
 GetDesktopCountProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "GetDesktopCount", "Ptr")
 GetCurrentDesktopNumberProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "GetCurrentDesktopNumber", "Ptr")
 
@@ -28,15 +26,16 @@ ExitApp
 ;----------
 
 CreateDesktop:
-DllCall(CreateDesktopProc)
+SetStoreCapsLockMode, Off
+Send, #^d
 DllCall("FreeLibrary", "Ptr", hVirtualDesktopAccessor)
 ExitApp
 
 ;----------
 
 DeleteDesktop:
-desktopcount := DllCall(GetDesktopCountProc, "Int")-1
-DllCall(RemoveDesktopProc, "Int", desktopcount, "Int", desktopcount-1, "Int")
+SetStoreCapsLockMode, Off
+Send, #^{f4}
 DllCall("FreeLibrary", "Ptr", hVirtualDesktopAccessor)
 ExitApp
 
